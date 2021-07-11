@@ -1,0 +1,44 @@
+﻿@page "/Player"
+
+@inject ArkEcho.Server.ArkEchoServer Server
+@inject IJSRuntime JS
+@inject AppModel Model
+
+<p>MusicFileCount: @musicFileCounter</p>
+
+<button class="btn btn-primary" @onclick="Init">Init</button>
+<button class="btn btn-primary" @onclick="Play">Play</button>
+<button class="btn btn-primary" @onclick="Pause">Pause</button>
+<br />
+<button class="btn btn-primary" @onclick="Count">Count</button>
+
+@code { 
+    private int musicFileCounter = 0;
+
+    protected override Task OnInitializedAsync()
+    {
+        musicFileCounter = Server.GetAllMusicFiles().Count;
+        return base.OnInitializedAsync();
+    }
+
+    private void Init()
+    {
+        Core.MusicFile file = Server.GetAllMusicFiles().Find(x => x.Title.Equals("Du bist schön", StringComparison.OrdinalIgnoreCase));
+        JS.InvokeVoidAsync("Init", new object[] { file.GUID.ToString() });
+    }
+
+    private void Play()
+    {
+        JS.InvokeVoidAsync("PlayAudio", new object[] { });
+    }
+
+    private void Pause()
+    {
+        JS.InvokeVoidAsync("PauseAudio", new object[] { });
+    }
+
+    private void Count()
+    {
+        Model.Counter++;
+    }
+}

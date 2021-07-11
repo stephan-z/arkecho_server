@@ -36,12 +36,12 @@ namespace ArkEcho.Server
             Config = new ServerConfig();
             if (!Config.Load(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)))
             {
-                Console.WriteLine("No Config File found -> created new one, please configure. Stopping Server");
+                Console.WriteLine("### No Config File found -> created new one, please configure. Stopping Server");
                 return false;
             }
             else if (string.IsNullOrEmpty(Config.MusicFolder) || !Directory.Exists(Config.MusicFolder))
             {
-                Console.WriteLine("Music File Path not found! Enter Correct Path like: \"C:\\Users\\UserName\\Music\"");
+                Console.WriteLine("### Music File Path not found! Enter Correct Path like: \"C:\\Users\\UserName\\Music\"");
                 return false;
             }
             else
